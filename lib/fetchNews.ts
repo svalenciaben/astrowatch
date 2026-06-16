@@ -43,6 +43,38 @@ function isAlert(text: string): boolean {
   return ALERT_KEYWORDS.some((kw) => lower.includes(kw));
 }
 
+// Unsplash source images (free, no key needed for source API)
+const CATEGORY_IMAGES: Record<string, string> = {
+  spacex: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?w=600&q=80",
+  uap: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=600&q=80",
+  exoplanets: "https://images.unsplash.com/photo-1614642264762-d0a3b8bf3700?w=600&q=80",
+  seti: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=600&q=80",
+  missions: "https://images.unsplash.com/photo-1517976487492-5750f3195933?w=600&q=80",
+  nasa: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80",
+};
+
+async function resolveImage(url: string, articleUrl: string, category: string): Promise<string> {
+  // Already has a real image
+  if (url && url !== "/placeholder.jpg" && url.startsWith("http")) return url;
+
+  // Try og:image scraping from the article
+  try {
+    const res = await fetch(articleUrl, {
+      signal: AbortSignal.timeout(3000),
+      headers: { "User-Agent": "AstroWatch/1.0" },
+    });
+    if (res.ok) {
+      const html = await res.text();
+      const match = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)
+        || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
+      if (match?.[1]) return match[1];
+    }
+  } catch {}
+
+  // Fallback: category-based Unsplash image
+  return CATEGORY_IMAGES[category] || CATEGORY_IMAGES.nasa;
+}
+
 function categoryFromSource(source: string, title: string): string {
   const lower = (source + " " + title).toLowerCase();
   if (lower.includes("spacex")) return "spacex";
@@ -142,9 +174,19 @@ export async function fetchSpaceNews(): Promise<NewsItem[]> {
 
   // Deduplicate by title
   const seen = new Set<string>();
-  return results.filter((n) => {
+  const unique = results.filter((n) => {
     if (seen.has(n.title)) return false;
     seen.add(n.title);
     return true;
   });
+
+  // Resolve missing images in parallel (max 8 concurrent)
+  const withImages = await Promise.all(
+    unique.map(async (n) => ({
+      ...n,
+      imageUrl: await resolveImage(n.imageUrl, n.url, n.category),
+    }))
+  );
+
+  return withImages;
 }
