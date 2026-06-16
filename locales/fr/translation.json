@@ -1,0 +1,50 @@
+{
+  "nav": {
+    "title": "AstroWatch",
+    "tagline": "Hub Spatial & Intelligence Extraterrestre",
+    "settings": "Paramètres",
+    "radar": "Radar ET"
+  },
+  "filters": {
+    "all": "Tout",
+    "nasa": "NASA",
+    "spacex": "SpaceX",
+    "uap": "PAN / OVNI",
+    "exoplanets": "Exoplanètes",
+    "seti": "SETI",
+    "missions": "Missions"
+  },
+  "sections": {
+    "alert": "ALERTE URGENTE",
+    "top": "Dernières Nouvelles",
+    "radar": "Radar Extraterrestre",
+    "radarDesc": "Affichage uniquement du contenu lié à la vie au-delà de la Terre"
+  },
+  "news": {
+    "readMore": "Lire la suite",
+    "save": "Sauvegarder",
+    "saved": "Sauvegardé",
+    "source": "Source",
+    "noResults": "Aucune actualité trouvée pour ce filtre.",
+    "loading": "Chargement des nouvelles du cosmos..."
+  },
+  "settings": {
+    "title": "Paramètres",
+    "notifications": "Notifications par email",
+    "emailLabel": "Email du résumé quotidien",
+    "timeLabel": "Heure d'envoi (heure locale)",
+    "save": "Sauvegarder",
+    "saved": "Paramètres sauvegardés !",
+    "language": "Langue",
+    "testEmail": "Envoyer un email de test"
+  },
+  "email": {
+    "subject": "🚀 AstroWatch Quotidien",
+    "greeting": "Votre briefing spatial quotidien est arrivé",
+    "topStories": "Les meilleures histoires du jour",
+    "etAlert": "⚠️ Alerte Extraterrestre",
+    "etAlertDesc": "Il y a des nouvelles aujourd'hui liées à la vie au-delà de la Terre !",
+    "viewAll": "Voir toutes les nouvelles",
+    "unsubscribe": "Se désabonner"
+  }
+}

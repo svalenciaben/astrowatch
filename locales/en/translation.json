@@ -1,0 +1,50 @@
+{
+  "nav": {
+    "title": "AstroWatch",
+    "tagline": "Space & Extraterrestrial Intelligence Hub",
+    "settings": "Settings",
+    "radar": "ET Radar"
+  },
+  "filters": {
+    "all": "All",
+    "nasa": "NASA",
+    "spacex": "SpaceX",
+    "uap": "UAP / UFO",
+    "exoplanets": "Exoplanets",
+    "seti": "SETI",
+    "missions": "Missions"
+  },
+  "sections": {
+    "alert": "BREAKING ALERT",
+    "top": "Latest News",
+    "radar": "Extraterrestrial Radar",
+    "radarDesc": "Only showing content related to life beyond Earth"
+  },
+  "news": {
+    "readMore": "Read more",
+    "save": "Save",
+    "saved": "Saved",
+    "source": "Source",
+    "noResults": "No news found for this filter.",
+    "loading": "Loading news from the cosmos..."
+  },
+  "settings": {
+    "title": "Settings",
+    "notifications": "Email Notifications",
+    "emailLabel": "Daily digest email",
+    "timeLabel": "Send time (your local time)",
+    "save": "Save settings",
+    "saved": "Settings saved!",
+    "language": "Language",
+    "testEmail": "Send test email"
+  },
+  "email": {
+    "subject": "🚀 AstroWatch Daily",
+    "greeting": "Your daily space briefing is here",
+    "topStories": "Top Stories Today",
+    "etAlert": "⚠️ Extraterrestrial Alert",
+    "etAlertDesc": "There are news today related to life beyond Earth!",
+    "viewAll": "View all news",
+    "unsubscribe": "Unsubscribe"
+  }
+}
