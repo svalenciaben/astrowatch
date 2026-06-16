@@ -18,25 +18,23 @@ export default function FilterBar({
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col sm:flex-row gap-3 mb-6">
-      {/* Search */}
+    <div className="flex flex-col sm:flex-row gap-4 mb-8">
       <input
         type="text"
         value={search}
         onChange={(e) => onSearch(e.target.value)}
-        placeholder="🔍 Search..."
-        className="bg-space-dark border border-space-blue/30 rounded-lg px-4 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-space-electric w-full sm:w-64"
+        placeholder="Search..."
+        className="bg-transparent border border-space-steel/40 rounded px-4 py-2 text-sm text-space-white placeholder-space-muted focus:outline-none focus:border-space-muted w-full sm:w-56 font-inter"
       />
-      {/* Category filters */}
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex gap-1 flex-wrap">
         {FILTERS.map((f) => (
           <button
             key={f}
             onClick={() => onChange(f)}
-            className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
+            className={`px-3 py-1.5 rounded text-xs font-medium transition-all ${
               active === f
-                ? "bg-space-electric border-space-electric text-white"
-                : "border-slate-600 text-slate-400 hover:border-slate-400 hover:text-slate-200"
+                ? "bg-space-steel text-space-white"
+                : "text-space-dim hover:text-space-silver"
             }`}
           >
             {t(`filters.${f}`)}

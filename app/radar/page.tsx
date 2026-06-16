@@ -21,29 +21,29 @@ export default function RadarPage() {
   return (
     <div className="content min-h-screen">
       <Navbar />
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="text-center mb-10">
-          <div className="text-6xl mb-4">👽</div>
-          <h2 className="font-orbitron text-4xl font-black text-space-alien glow-green mb-2">
-            {t("sections.radar")}
-          </h2>
-          <p className="text-slate-400 font-space">{t("sections.radarDesc")}</p>
+      <main className="max-w-7xl mx-auto px-6 py-12">
+        <div className="mb-12">
+          <p className="text-space-et/60 text-xs uppercase tracking-widest font-medium mb-3">
+            ET Radar
+          </p>
+          <h1 className="font-playfair text-4xl text-space-white font-semibold mb-2">
+            Extraterrestrial Intelligence
+          </h1>
+          <p className="text-space-dim text-sm">Stories related to life beyond Earth</p>
+          <div className="divider mt-6"></div>
         </div>
 
         {loading && (
-          <div className="text-center py-20">
-            <p className="text-space-alien font-space animate-pulse">Scanning the cosmos for signals... 📡</p>
+          <div className="text-center py-24">
+            <p className="text-space-dim text-sm">Scanning the cosmos...</p>
           </div>
         )}
 
         {!loading && news.length === 0 && (
-          <div className="text-center py-20 text-slate-500">
-            <div className="text-5xl mb-4">🔭</div>
-            <p>{t("news.noResults")}</p>
-          </div>
+          <div className="text-center py-24 text-space-muted text-sm">No ET signals detected today.</div>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {news.map((n) => <NewsCard key={n.id} item={n} />)}
         </div>
       </main>

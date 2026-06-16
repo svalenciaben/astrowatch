@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Orbitron, Space_Grotesk } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
-const orbitron = Orbitron({ subsets: ["latin"], variable: "--font-orbitron" });
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 
 export const metadata: Metadata = {
-  title: "AstroWatch — Space & ET Intelligence Hub",
+  title: "AstroWatch — Space Intelligence",
   description: "Daily aerospace and extraterrestrial news hub",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${orbitron.variable} ${spaceGrotesk.variable} bg-space-black text-white`}>
+    <html lang="en">
+      <body className={`${inter.variable} ${playfair.variable} bg-space-void text-space-white`}>
         {children}
       </body>
     </html>

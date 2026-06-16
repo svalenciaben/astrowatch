@@ -39,35 +39,42 @@ export default function Home() {
   return (
     <div className="content min-h-screen">
       <Navbar />
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main className="max-w-7xl mx-auto px-6 py-12">
+
         {/* Hero */}
-        <div className="text-center mb-10">
-          <h2 className="font-orbitron text-4xl md:text-5xl font-black text-space-neon glow-cyan mb-2">
-            SPACE INTELLIGENCE
-          </h2>
-          <p className="text-slate-400 font-space">{t("nav.tagline")}</p>
+        <div className="mb-12">
+          <p className="text-space-dim text-xs uppercase tracking-widest font-medium mb-3">
+            Daily Intelligence Brief
+          </p>
+          <h1 className="font-playfair text-4xl md:text-5xl text-space-white font-semibold leading-tight mb-2">
+            Space & Beyond
+          </h1>
+          <div className="divider mt-6"></div>
         </div>
 
         <FilterBar active={filter} onChange={setFilter} search={search} onSearch={setSearch} />
 
         {loading && (
-          <div className="text-center py-20">
-            <div className="text-4xl mb-4">🛸</div>
-            <p className="text-space-neon font-space animate-pulse">{t("news.loading")}</p>
+          <div className="text-center py-24">
+            <div className="w-1 h-1 rounded-full bg-space-blue mx-auto mb-6 animate-ping"></div>
+            <p className="text-space-dim text-sm font-inter">Fetching signals from deep space...</p>
           </div>
         )}
 
         {!loading && filtered.length === 0 && (
-          <div className="text-center py-20 text-slate-500">{t("news.noResults")}</div>
+          <div className="text-center py-24 text-space-muted text-sm">{t("news.noResults")}</div>
         )}
 
         {/* Alert section */}
         {alerts.length > 0 && (
-          <section className="mb-10">
-            <h2 className="font-orbitron text-red-400 text-sm font-bold tracking-widest mb-4 flex items-center gap-2">
-              <span className="alert-badge">🚨</span> {t("sections.alert")}
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <section className="mb-12">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="alert-badge w-1.5 h-1.5 rounded-full bg-space-alert inline-block"></span>
+              <h2 className="text-space-dim text-xs uppercase tracking-widest font-medium">
+                Breaking
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {alerts.map((n) => <NewsCard key={n.id} item={n} />)}
             </div>
           </section>
@@ -76,10 +83,13 @@ export default function Home() {
         {/* Main feed */}
         {regular.length > 0 && (
           <section>
-            <h2 className="font-orbitron text-space-neon text-sm font-bold tracking-widest mb-4">
-              📡 {t("sections.top")}
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div className="flex items-center gap-3 mb-5">
+              <h2 className="text-space-dim text-xs uppercase tracking-widest font-medium">
+                Latest
+              </h2>
+              <span className="text-space-steel/50 text-xs">{regular.length} stories</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {regular.map((n) => <NewsCard key={n.id} item={n} />)}
             </div>
           </section>

@@ -9,30 +9,24 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        orbitron: ["Orbitron", "sans-serif"],
-        space: ["Space Grotesk", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+        playfair: ["Playfair Display", "serif"],
       },
       colors: {
         space: {
-          black: "#030712",
-          dark: "#0a0f1e",
-          blue: "#1d4ed8",
-          electric: "#3b82f6",
-          neon: "#22d3ee",
-          green: "#4ade80",
-          alien: "#a3e635",
-          purple: "#7c3aed",
-          alert: "#ef4444",
-        },
-      },
-      animation: {
-        "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "glow": "glow 2s ease-in-out infinite alternate",
-      },
-      keyframes: {
-        glow: {
-          from: { textShadow: "0 0 10px #22d3ee, 0 0 20px #22d3ee" },
-          to: { textShadow: "0 0 20px #22d3ee, 0 0 40px #22d3ee, 0 0 60px #22d3ee" },
+          void: "#080c14",
+          deep: "#0d1220",
+          navy: "#0f172a",
+          steel: "#1e293b",
+          muted: "#334155",
+          dim: "#64748b",
+          silver: "#94a3b8",
+          light: "#cbd5e1",
+          white: "#e2e8f0",
+          blue: "#3b82f6",
+          indigo: "#6366f1",
+          alert: "#f97316",
+          et: "#10b981",
         },
       },
     },

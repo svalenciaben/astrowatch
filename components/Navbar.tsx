@@ -10,36 +10,38 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-space-dark/90 backdrop-blur border-b border-space-blue/30">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3">
-          <span className="text-2xl">🚀</span>
+    <nav className="sticky top-0 z-50 border-b border-space-steel/40 bg-space-void/95 backdrop-blur-md">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-4">
+          <div className="w-6 h-6 rounded-full bg-space-blue/20 border border-space-blue/40 flex items-center justify-center">
+            <div className="w-2 h-2 rounded-full bg-space-blue"></div>
+          </div>
           <div>
-            <h1 className="font-orbitron font-black text-xl text-space-neon glow-cyan tracking-widest">
-              {t("nav.title")}
-            </h1>
-            <p className="text-xs text-slate-400 font-space hidden sm:block">{t("nav.tagline")}</p>
+            <span className="font-playfair text-lg font-semibold text-space-white tracking-wide">
+              AstroWatch
+            </span>
+            <span className="hidden sm:inline text-space-dim text-xs ml-3 font-inter">
+              Space Intelligence
+            </span>
           </div>
         </Link>
 
-        <div className="flex items-center gap-3">
-          <Link
-            href="/radar"
-            className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-space-alien/50 text-space-alien text-sm font-medium hover:bg-space-alien/10 transition-colors"
+        <div className="flex items-center gap-1">
+          <Link href="/radar"
+            className="px-4 py-1.5 text-sm text-space-silver hover:text-space-et transition-colors"
           >
-            👽 {t("nav.radar")}
+            ET Radar
           </Link>
-          <Link
-            href="/settings"
-            className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-space-electric/50 text-space-electric text-sm hover:bg-space-electric/10 transition-colors"
+          <Link href="/settings"
+            className="px-4 py-1.5 text-sm text-space-silver hover:text-space-white transition-colors"
           >
-            ⚙️ {t("nav.settings")}
+            Settings
           </Link>
           <button
             onClick={toggleLang}
-            className="px-3 py-1.5 rounded-full border border-slate-600 text-slate-300 text-sm hover:border-slate-400 transition-colors"
+            className="ml-2 px-3 py-1.5 text-xs text-space-dim border border-space-steel/60 rounded hover:border-space-muted transition-colors"
           >
-            {i18n.language === "en" ? "🇺🇸 EN" : "🇫🇷 FR"}
+            {i18n.language === "en" ? "EN" : "FR"}
           </button>
         </div>
       </div>
