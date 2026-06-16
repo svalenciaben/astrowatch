@@ -24,17 +24,17 @@ export default function FilterBar({
         value={search}
         onChange={(e) => onSearch(e.target.value)}
         placeholder="Search..."
-        className="bg-transparent border border-space-steel/40 rounded px-4 py-2 text-sm text-space-white placeholder-space-muted focus:outline-none focus:border-space-muted w-full sm:w-56 font-inter"
+        className="bg-white border border-space-sand rounded px-4 py-2 text-sm text-space-deep placeholder-space-warm focus:outline-none focus:border-space-warm w-full sm:w-56 font-inter"
       />
       <div className="flex gap-1 flex-wrap">
         {FILTERS.map((f) => (
           <button
             key={f}
             onClick={() => onChange(f)}
-            className={`px-3 py-1.5 rounded text-xs font-medium transition-all ${
+            className={`px-3 py-1.5 rounded text-xs font-medium transition-all font-inter ${
               active === f
-                ? "bg-space-steel text-space-white"
-                : "text-space-dim hover:text-space-silver"
+                ? "bg-space-deep text-white"
+                : "text-space-muted hover:text-space-ink bg-white border border-space-sand"
             }`}
           >
             {t(`filters.${f}`)}
