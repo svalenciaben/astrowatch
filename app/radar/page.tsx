@@ -7,16 +7,17 @@ import NewsCard from "@/components/NewsCard";
 import type { NewsItem } from "@/lib/fetchNews";
 
 export default function RadarPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/news")
+    setLoading(true);
+    fetch(`/api/news?lang=${i18n.language}`)
       .then((r) => r.json())
       .then((d) => setNews((d.news || []).filter((n: NewsItem) => n.isExtraterrestrial)))
       .finally(() => setLoading(false));
-  }, []);
+  }, [i18n.language]);
 
   return (
     <div className="content min-h-screen">

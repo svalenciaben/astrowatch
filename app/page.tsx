@@ -8,18 +8,19 @@ import FilterBar, { Filter } from "@/components/FilterBar";
 import type { NewsItem } from "@/lib/fetchNews";
 
 export default function Home() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<Filter>("all");
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("/api/news")
+    setLoading(true);
+    fetch(`/api/news?lang=${i18n.language}`)
       .then((r) => r.json())
       .then((d) => setNews(d.news || []))
       .finally(() => setLoading(false));
-  }, []);
+  }, [i18n.language]);
 
   const filtered = useMemo(() => {
     let items = news;
