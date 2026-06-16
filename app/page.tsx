@@ -5,7 +5,13 @@ import "@/lib/i18n";
 import Navbar from "@/components/Navbar";
 import NewsCard from "@/components/NewsCard";
 import FilterBar, { Filter } from "@/components/FilterBar";
+import LaunchCountdown from "@/components/LaunchCountdown";
+import TrendingChart from "@/components/TrendingChart";
 import type { NewsItem } from "@/lib/fetchNews";
+
+function getTodayKey() {
+  return `astrowatch-history-${new Date().toISOString().slice(0, 10)}`;
+}
 
 export default function Home() {
   const { t, i18n } = useTranslation();
@@ -13,17 +19,61 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<Filter>("all");
   const [search, setSearch] = useState("");
+  const [showHistory, setShowHistory] = useState(false);
+  const [historyNews, setHistoryNews] = useState<NewsItem[]>([]);
 
   useEffect(() => {
     setLoading(true);
     fetch(`/api/news?lang=${i18n.language}`)
       .then((r) => r.json())
-      .then((d) => setNews(d.news || []))
+      .then((d) => {
+        const fetched: NewsItem[] = d.news || [];
+        setNews(fetched);
+
+        // Cache to localStorage for history
+        try {
+          localStorage.setItem(getTodayKey(), JSON.stringify(fetched));
+        } catch {}
+
+        // Push notifications for alerts
+        if (typeof window !== "undefined" && Notification.permission === "granted") {
+          fetched.filter((n) => n.isAlert).forEach((n) => {
+            new Notification("AstroWatch Breaking", { body: n.title, icon: "/placeholder.jpg" });
+          });
+        }
+      })
       .finally(() => setLoading(false));
   }, [i18n.language]);
 
+  // Load history from localStorage
+  useEffect(() => {
+    if (!showHistory) return;
+    const allItems: NewsItem[] = [];
+    const seenIds = new Set(news.map((n) => n.id));
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith("astrowatch-history-") && key !== getTodayKey()) {
+          const stored = localStorage.getItem(key);
+          if (stored) {
+            const items: NewsItem[] = JSON.parse(stored);
+            items.forEach((item) => {
+              if (!seenIds.has(item.id)) {
+                seenIds.add(item.id);
+                allItems.push(item);
+              }
+            });
+          }
+        }
+      }
+    } catch {}
+    setHistoryNews(allItems);
+  }, [showHistory, news]);
+
+  const sourceNews = showHistory ? [...news, ...historyNews] : news;
+
   const filtered = useMemo(() => {
-    let items = news;
+    let items = sourceNews;
     if (filter !== "all") items = items.filter((n) => n.category === filter);
     if (search.trim()) {
       const q = search.toLowerCase();
@@ -32,7 +82,7 @@ export default function Home() {
       );
     }
     return items;
-  }, [news, filter, search]);
+  }, [sourceNews, filter, search]);
 
   const alerts = filtered.filter((n) => n.isAlert);
   const regular = filtered.filter((n) => !n.isAlert);
@@ -55,7 +105,32 @@ export default function Home() {
           <div className="divider mt-8"></div>
         </div>
 
+        {/* Launch Countdown */}
+        <LaunchCountdown />
+
         <FilterBar active={filter} onChange={setFilter} search={search} onSearch={setSearch} />
+
+        {/* History toggle */}
+        <div className="mb-6">
+          <button
+            onClick={() => setShowHistory(!showHistory)}
+            className={`text-xs px-3 py-1.5 rounded border font-inter transition-all ${
+              showHistory
+                ? "bg-space-deep text-white border-space-deep"
+                : "text-space-muted border-space-sand bg-white hover:text-space-ink"
+            }`}
+          >
+            {showHistory ? "Hide history" : "Show history"}
+          </button>
+          {showHistory && historyNews.length > 0 && (
+            <span className="ml-2 text-[10px] text-space-muted font-inter">
+              +{historyNews.length} cached articles
+            </span>
+          )}
+        </div>
+
+        {/* Trending chart */}
+        {!loading && news.length > 0 && <TrendingChart news={news} />}
 
         {loading && (
           <div className="text-center py-24">

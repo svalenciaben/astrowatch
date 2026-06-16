@@ -41,3 +41,32 @@ body {
   height: 1px;
   background: linear-gradient(90deg, transparent, #c8bfaf, transparent);
 }
+
+/* Dark mode */
+.dark body {
+  background: #0f0e17;
+  color: #e8e3d9;
+}
+.dark .news-card {
+  background: #1a1928;
+  border-color: #2e2d40;
+  color: #e8e3d9;
+}
+.dark .news-card h3 {
+  color: #e8e3d9;
+}
+.dark nav {
+  background: rgba(15, 14, 23, 0.95);
+  border-color: #2e2d40;
+}
+.dark input {
+  background: #1a1928;
+  border-color: #2e2d40;
+  color: #e8e3d9;
+}
+.dark .bg-white {
+  background: #1a1928 !important;
+}
+.dark .border-space-sand\/60 {
+  border-color: #2e2d40 !important;
+}

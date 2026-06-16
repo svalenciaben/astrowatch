@@ -110,6 +110,26 @@ function buildEmailHTML(news: NewsItem[], lang: "en" | "fr", appUrl: string): st
 </html>`;
 }
 
+export async function sendWeeklyDigest(
+  to: string,
+  news: NewsItem[],
+  lang: "en" | "fr" = "en"
+) {
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const top10 = news.slice(0, 10);
+  const subject =
+    lang === "fr"
+      ? `🌟 AstroWatch — Le meilleur de la semaine`
+      : `🌟 AstroWatch — Best of the week`;
+
+  await transporter.sendMail({
+    from: `AstroWatch <${process.env.GMAIL_USER}>`,
+    to,
+    subject,
+    html: buildEmailHTML(top10, lang, appUrl),
+  });
+}
+
 export async function sendDailyDigest(
   to: string,
   news: NewsItem[],

@@ -9,6 +9,7 @@ export interface NewsItem {
   category: string;
   isAlert: boolean;
   isExtraterrestrial: boolean;
+  etScore: number;
 }
 
 const ET_KEYWORDS = [
@@ -22,6 +23,15 @@ const ALERT_KEYWORDS = [
   "breaking", "discovered", "confirmed", "historic", "unprecedented",
   "first ever", "major discovery", "announcement",
 ];
+
+export function computeETScore(title: string, description: string): number {
+  const text = (title + " " + description).toLowerCase();
+  let score = 0;
+  for (const kw of ET_KEYWORDS) {
+    if (text.includes(kw)) score++;
+  }
+  return Math.min(score, 10);
+}
 
 function isET(text: string): boolean {
   const lower = text.toLowerCase();
@@ -68,6 +78,7 @@ export async function fetchSpaceNews(): Promise<NewsItem[]> {
           category: categoryFromSource("nasa", item.title),
           isAlert: isAlert(text),
           isExtraterrestrial: isET(text),
+          etScore: computeETScore(item.title, item.explanation?.slice(0, 200) || ""),
         });
       });
     }
@@ -98,6 +109,7 @@ export async function fetchSpaceNews(): Promise<NewsItem[]> {
               category: categoryFromSource(a.source?.name || "", a.title),
               isAlert: isAlert(text),
               isExtraterrestrial: isET(text),
+              etScore: computeETScore(a.title, a.description || ""),
             });
           });
         }
@@ -123,6 +135,7 @@ export async function fetchSpaceNews(): Promise<NewsItem[]> {
         category: categoryFromSource("space.com", item.title || ""),
         isAlert: isAlert(text),
         isExtraterrestrial: isET(text),
+        etScore: computeETScore(item.title || "", item.contentSnippet?.slice(0, 200) || ""),
       });
     });
   } catch {}
