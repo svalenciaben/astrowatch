@@ -3,11 +3,7 @@ import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
 export default function Navbar() {
-  const { t, i18n } = useTranslation();
-
-  const toggleLang = () => {
-    i18n.changeLanguage(i18n.language === "en" ? "fr" : "en");
-  };
+  const { t } = useTranslation();
 
   return (
     <nav className="sticky top-0 z-50 border-b border-space-sand bg-space-cream/95 backdrop-blur-md">
@@ -28,19 +24,13 @@ export default function Navbar() {
           <Link href="/radar"
             className="px-4 py-1.5 text-sm text-space-dim hover:text-space-et transition-colors font-inter"
           >
-            ET Radar
+            {t("nav.radar")}
           </Link>
           <Link href="/settings"
             className="px-4 py-1.5 text-sm text-space-dim hover:text-space-deep transition-colors font-inter"
           >
-            Settings
+            {t("nav.settings")}
           </Link>
-          <button
-            onClick={toggleLang}
-            className="ml-2 px-3 py-1.5 text-xs text-space-muted border border-space-sand rounded hover:border-space-warm transition-colors font-inter"
-          >
-            {i18n.language === "en" ? "EN" : "FR"}
-          </button>
         </div>
       </div>
     </nav>
