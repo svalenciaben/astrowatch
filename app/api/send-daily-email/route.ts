@@ -2,6 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { fetchSpaceNews } from "@/lib/fetchNews";
 import { sendDailyDigest } from "@/lib/mailer";
 
+async function handleEmail() {
+  const email = process.env.DEFAULT_EMAIL || "svalenciaben@gmail.com";
+  const news = await fetchSpaceNews();
+  await sendDailyDigest(email, news, "en");
+  return NextResponse.json({ success: true, sentTo: email, articles: news.length });
+}
+
+export async function GET() {
+  try {
+    return await handleEmail();
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
