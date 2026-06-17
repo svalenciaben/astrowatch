@@ -132,14 +132,14 @@ export async function fetchSpaceNews(): Promise<NewsItem[]> {
 
   // RSS feeds
   const RSS_SOURCES = [
-    { url: "https://www.space.com/feeds/all", id: "space", name: "Space.com" },
+    { url: "https://www.universetoday.com/feed/", id: "ut", name: "Universe Today" },
+    { url: "https://www.space.com/feeds.xml", id: "space", name: "Space.com" },
+    { url: "https://www.nasaspaceflight.com/feed/", id: "nsf", name: "NASASpaceFlight" },
+    { url: "https://arstechnica.com/science/feed/", id: "ars", name: "Ars Technica" },
+    { url: "https://skyandtelescope.org/astronomy-news/feed/", id: "sat", name: "Sky & Telescope" },
+    { url: "https://www.planetary.org/articles/feed.xml", id: "tps", name: "The Planetary Society" },
     { url: "https://www.nasa.gov/rss/dyn/breaking_news.rss", id: "nasa-news", name: "NASA News" },
     { url: "https://www.esa.int/rssfeed/Our_Activities/Space_Science", id: "esa", name: "ESA" },
-    { url: "https://spaceflight-now.com/feed/", id: "sfn", name: "Spaceflight Now" },
-    { url: "https://skyandtelescope.org/astronomy-news/feed/", id: "sat", name: "Sky & Telescope" },
-    { url: "https://www.universetoday.com/feed/", id: "ut", name: "Universe Today" },
-    { url: "https://www.planetary.org/articles/feed.xml", id: "tps", name: "The Planetary Society" },
-    { url: "https://www.scientificamerican.com/section/space/feed/", id: "sci-am", name: "Scientific American Space" },
   ];
 
   try {
