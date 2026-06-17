@@ -1,3 +1,18 @@
+// ── In-memory stale-while-revalidate cache ───────────────────────
+let _cache: { data: NewsItem[]; time: number } | null = null;
+const CACHE_TTL = 5 * 60 * 1000;
+
+export async function fetchSpaceNewsCached(): Promise<NewsItem[]> {
+  const now = Date.now();
+  if (_cache && now - _cache.time < CACHE_TTL) {
+    fetchSpaceNews().then(d => { _cache = { data: d, time: Date.now() }; }).catch(() => {});
+    return _cache.data;
+  }
+  const data = await fetchSpaceNews();
+  _cache = { data, time: now };
+  return data;
+}
+
 export interface NewsItem {
   id: string;
   title: string;

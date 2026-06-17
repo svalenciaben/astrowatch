@@ -43,8 +43,8 @@ export default function FilterBar({
     <div className="flex flex-col gap-3 mb-8">
       {/* Top row: language switcher */}
       <div className="flex items-center justify-between flex-wrap gap-2">
-        {/* Category pill filters */}
-        <div className="flex gap-2 flex-wrap">
+        {/* Category pill filters — horizontal scroll on mobile */}
+        <div className="filter-bar-scroll flex gap-2 flex-nowrap sm:flex-wrap">
           {FILTERS.map((f) => (
             <button
               key={f}

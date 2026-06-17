@@ -195,6 +195,34 @@ body {
 }
 .et-orb { animation: orbPulse 4s ease-in-out infinite; }
 
+/* ── MOBILE RESPONSIVE ──────────────────────────────────────── */
+
+/* FilterBar: horizontal scroll on mobile without showing scrollbar */
+@media (max-width: 640px) {
+  .filter-bar-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 4px;
+  }
+  .filter-bar-scroll::-webkit-scrollbar { display: none; }
+
+  /* Hero section: reduce height on mobile */
+  .hero-card { min-height: auto; height: 260px; }
+
+  /* ET radar: hide on very small screens */
+  .et-radar-mobile { display: none; }
+
+  /* Reduce font sizes for mobile hero */
+  .hero-title-mobile { font-size: 1.75rem !important; }
+}
+
+@media (max-width: 768px) {
+  /* ET radar orb: hide on tablet and below */
+  .et-radar-mobile { display: none; }
+}
+
 /* Dark mode */
 .dark body {
   background: #0f0e17;

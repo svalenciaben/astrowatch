@@ -120,7 +120,9 @@ function ETHero({ lang }: { lang: Lang }) {
             ))}
           </div>
         </div>
-        <RadarOrb />
+        <div className="et-radar-mobile">
+          <RadarOrb />
+        </div>
       </div>
 
       {/* Bottom gradient fade */}

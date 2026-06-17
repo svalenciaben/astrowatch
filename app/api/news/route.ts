@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { fetchSpaceNews } from "@/lib/fetchNews";
+import { fetchSpaceNewsCached } from "@/lib/fetchNews";
 import { translateNewsItems } from "@/lib/translate";
 
 export const revalidate = 0; // no cache — always fetch fresh
@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
   try {
     const lang = req.nextUrl.searchParams.get("lang") || "en";
     const news = await Promise.race([
-      fetchSpaceNews(),
+      fetchSpaceNewsCached(),
       new Promise<never>((_, reject) => setTimeout(() => reject(new Error("timeout")), 14000)),
     ]);
 

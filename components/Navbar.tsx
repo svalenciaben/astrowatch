@@ -2,8 +2,10 @@
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import SpotlightSearch from "@/components/SpotlightSearch";
+import type { NewsItem } from "@/lib/fetchNews";
 
-export default function Navbar({ onSearch }: { onSearch?: (v: string) => void }) {
+export default function Navbar({ onSearch, news = [] }: { onSearch?: (v: string) => void; news?: NewsItem[] }) {
   const { t } = useTranslation();
   const [dark, setDark] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -66,48 +68,26 @@ export default function Navbar({ onSearch }: { onSearch?: (v: string) => void })
         </Link>
 
         <div className="flex items-center gap-1">
-          {/* Search bar */}
-          <div className="flex items-center gap-2">
-            {searchOpen && (
-              <input
-                ref={searchRef}
-                type="text"
-                value={searchValue}
-                onChange={(e) => handleSearch(e.target.value)}
-                placeholder="Search stories..."
-                className="bg-white border border-space-sand rounded-full px-4 py-1.5 text-sm text-space-deep placeholder-space-warm focus:outline-none focus:border-space-blue transition-all w-48 font-inter"
-                onBlur={() => {
-                  if (!searchValue) setSearchOpen(false);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Escape") {
-                    setSearchOpen(false);
-                    handleSearch("");
-                  }
-                }}
-              />
-            )}
-            <button
-              onClick={() => setSearchOpen(!searchOpen)}
-              aria-label="Search"
-              className="w-8 h-8 flex items-center justify-center rounded-full border border-space-sand text-space-muted hover:text-space-ink hover:border-space-warm transition-colors text-sm"
-            >
-              🔍
-            </button>
-          </div>
+          {/* Cmd+K Spotlight */}
+          <SpotlightSearch news={news} />
 
+          <Link href="/launches"
+            className="hidden md:inline nav-link px-3 py-1.5 text-sm text-space-dim hover:text-space-deep transition-colors font-inter"
+          >
+            Launches
+          </Link>
+          <Link href="/signal"
+            className="hidden md:inline nav-link px-3 py-1.5 text-sm text-space-dim hover:text-space-deep transition-colors font-inter"
+          >
+            Signal
+          </Link>
           <Link href="/favorites"
-            className="nav-link px-4 py-1.5 text-sm text-space-dim hover:text-space-deep transition-colors font-inter"
+            className="hidden md:inline nav-link px-3 py-1.5 text-sm text-space-dim hover:text-space-deep transition-colors font-inter"
           >
             Favorites
           </Link>
-          <Link href="/radar"
-            className="nav-link px-4 py-1.5 text-sm text-space-dim hover:text-space-et transition-colors font-inter"
-          >
-            {t("nav.radar")}
-          </Link>
           <Link href="/settings"
-            className="nav-link px-4 py-1.5 text-sm text-space-dim hover:text-space-deep transition-colors font-inter"
+            className="nav-link px-3 py-1.5 text-sm text-space-dim hover:text-space-deep transition-colors font-inter"
           >
             {t("nav.settings")}
           </Link>

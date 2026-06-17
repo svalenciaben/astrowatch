@@ -12,6 +12,7 @@ import ETDossier from "@/components/ETDossier";
 import UAPDossier from "@/components/UAPDossier";
 import SETIDossier from "@/components/SETIDossier";
 import SpaceXDossier from "@/components/SpaceXDossier";
+import ThisWeekInSpace from "@/components/ThisWeekInSpace";
 import type { NewsItem } from "@/lib/fetchNews";
 
 function getTodayKey() {
@@ -235,7 +236,7 @@ export default function Home() {
 
   return (
     <div className="content min-h-screen page-enter">
-      <Navbar onSearch={setSearch} />
+      <Navbar onSearch={setSearch} news={news} />
       <main className="max-w-7xl mx-auto px-6 py-6">
 
         {/* HERO — first thing visible */}
@@ -370,6 +371,9 @@ export default function Home() {
               </div>
             )}
 
+            {/* This Week in Space digest */}
+            <ThisWeekInSpace news={news} />
+
             {/* Fallback: if fewer items, just show sidebar below */}
             {gridItems.length === 0 && (
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -395,7 +399,7 @@ export default function Home() {
 
         <footer className="mt-16 pt-8 border-t border-space-sand text-center">
           <p className="text-space-warm text-xs font-inter font-light">
-            AstroWatch · Updated every 6 hours · Daily digest sent to svalenciaben@gmail.com
+            AstroWatch · Updated every 6 hours · Data from NASA, SpaceX, ESA & more
           </p>
         </footer>
       </main>
