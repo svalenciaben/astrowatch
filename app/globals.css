@@ -89,6 +89,112 @@ body {
   animation: fadeIn 0.4s ease forwards;
 }
 
+/* ── ET DOSSIER IMMERSIVE ────────────────────────────────────── */
+
+/* Starfield: three layers of stars using box-shadow */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.8; }
+  50%       { opacity: 0.2; }
+}
+@keyframes twinkleSlow {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 0.1; }
+}
+
+.et-star-sm {
+  position: absolute; inset: 0; pointer-events: none;
+  background: transparent;
+  box-shadow:
+    120px 40px #fff, 340px 180px #fff, 580px 60px #fff, 760px 220px #fff,
+    90px 310px #fff,  420px 370px #fff, 650px 290px #fff, 830px 140px #fff,
+    200px 480px #fff, 500px 520px #fff, 720px 460px #fff, 950px 80px #fff,
+    60px 560px #fff,  370px 610px #fff, 700px 590px #fff, 880px 540px #fff,
+    150px 680px #fff, 480px 700px #fff, 770px 730px #fff, 1020px 650px #fff,
+    310px 820px #fff, 600px 860px #fff, 900px 810px #fff, 1100px 780px #fff;
+  width: 1px; height: 1px; border-radius: 50%;
+  animation: twinkle 3s ease-in-out infinite;
+}
+.et-star-md {
+  position: absolute; inset: 0; pointer-events: none;
+  background: transparent;
+  box-shadow:
+    250px 90px rgba(255,255,255,0.9),  700px 200px rgba(255,255,255,0.9),
+    450px 450px rgba(255,255,255,0.9), 980px 350px rgba(255,255,255,0.9),
+    130px 600px rgba(255,255,255,0.9), 820px 620px rgba(255,255,255,0.9),
+    560px 780px rgba(255,255,255,0.9), 1050px 480px rgba(255,255,255,0.9);
+  width: 2px; height: 2px; border-radius: 50%;
+  animation: twinkleSlow 5s ease-in-out infinite 1.5s;
+}
+.et-star-lg {
+  position: absolute; inset: 0; pointer-events: none;
+  background: transparent;
+  box-shadow:
+    80px 200px rgba(255,255,255,0.7),  620px 80px rgba(255,255,255,0.7),
+    940px 260px rgba(255,255,255,0.7), 350px 700px rgba(255,255,255,0.7),
+    780px 750px rgba(255,255,255,0.7);
+  width: 3px; height: 3px; border-radius: 50%;
+  animation: twinkle 7s ease-in-out infinite 0.8s;
+}
+
+/* Radar rings */
+@keyframes radarPing {
+  0%   { transform: scale(0.3); opacity: 0.8; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+.radar-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(26, 107, 74, 0.5);
+  animation: radarPing 4s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+}
+.radar-ring:nth-child(2) { animation-delay: 1.3s; }
+.radar-ring:nth-child(3) { animation-delay: 2.6s; }
+
+/* Radar sweep */
+@keyframes radarSweep {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.radar-sweep {
+  animation: radarSweep 6s linear infinite;
+  transform-origin: center center;
+}
+
+/* Card stagger entrance */
+@keyframes cardEnter {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.et-card-enter { animation: cardEnter 0.5s ease forwards; opacity: 0; }
+.et-card-enter:nth-child(1) { animation-delay: 0.05s; }
+.et-card-enter:nth-child(2) { animation-delay: 0.12s; }
+.et-card-enter:nth-child(3) { animation-delay: 0.19s; }
+.et-card-enter:nth-child(4) { animation-delay: 0.26s; }
+.et-card-enter:nth-child(5) { animation-delay: 0.33s; }
+.et-card-enter:nth-child(6) { animation-delay: 0.40s; }
+
+/* Scan line */
+@keyframes scanLine {
+  0%   { top: -2%; opacity: 0.6; }
+  50%  { opacity: 0.3; }
+  100% { top: 102%; opacity: 0; }
+}
+.et-scan-line {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(26,107,74,0.6), rgba(26,107,74,0.3), transparent);
+  animation: scanLine 8s linear infinite;
+  pointer-events: none;
+}
+
+/* Glow orb */
+@keyframes orbPulse {
+  0%, 100% { box-shadow: 0 0 40px 10px rgba(26,107,74,0.25), 0 0 80px 20px rgba(26,107,74,0.1); }
+  50%       { box-shadow: 0 0 60px 20px rgba(26,107,74,0.4),  0 0 120px 40px rgba(26,107,74,0.15); }
+}
+.et-orb { animation: orbPulse 4s ease-in-out infinite; }
+
 /* Dark mode */
 .dark body {
   background: #0f0e17;
