@@ -9,6 +9,9 @@ import LaunchCountdown from "@/components/LaunchCountdown";
 import TrendingChart from "@/components/TrendingChart";
 import FunFact from "@/components/FunFact";
 import ETDossier from "@/components/ETDossier";
+import UAPDossier from "@/components/UAPDossier";
+import SETIDossier from "@/components/SETIDossier";
+import SpaceXDossier from "@/components/SpaceXDossier";
 import type { NewsItem } from "@/lib/fetchNews";
 
 function getTodayKey() {
@@ -193,9 +196,12 @@ export default function Home() {
 
   const sourceNews = showHistory ? [...news, ...historyNews] : news;
 
+  const DOSSIER_FILTERS = ["et", "uap", "seti", "spacex"];
+
   const filtered = useMemo(() => {
     let items = sourceNews;
     if (filter === "et") return items.filter((n) => n.isExtraterrestrial);
+    if (DOSSIER_FILTERS.includes(filter)) return [];
     if (filter !== "all") items = items.filter((n) => n.category === filter);
     if (search.trim()) {
       const q = search.toLowerCase();
@@ -296,11 +302,14 @@ export default function Home() {
           <div className="text-center py-24 text-space-warm text-sm font-inter">{t("news.noResults")}</div>
         )}
 
-        {/* ET Dossier — shown when ET filter is active */}
+        {/* Dossiers — shown when respective filter is active */}
         {filter === "et" && <ETDossier />}
+        {filter === "uap" && <UAPDossier />}
+        {filter === "seti" && <SETIDossier />}
+        {filter === "spacex" && <SpaceXDossier />}
 
         {/* Alert section */}
-        {filter !== "et" && alerts.length > 0 && (
+        {!DOSSIER_FILTERS.includes(filter) && alerts.length > 0 && (
           <section className="mb-12">
             <div className="flex items-center gap-3 mb-5">
               <span className="alert-badge w-1.5 h-1.5 rounded-full bg-space-alert inline-block"></span>
@@ -315,7 +324,7 @@ export default function Home() {
           </section>
         )}
 
-        {!loading && filter !== "et" && regular.length > 0 && (
+        {!loading && !DOSSIER_FILTERS.includes(filter) && regular.length > 0 && (
           <>
             {/* Featured row: 3 columns */}
             {featuredItems.length > 0 && (

@@ -1,28 +1,28 @@
 "use client";
 import { useTranslation } from "react-i18next";
 
-const FILTERS = ["all", "nasa", "spacex", "uap", "exoplanets", "seti", "missions", "et"] as const;
+const FILTERS = ["all", "nasa", "missions", "exoplanets", "spacex", "uap", "seti", "et"] as const;
 export type Filter = typeof FILTERS[number];
 
 const FILTER_ICONS: Record<string, string> = {
   all: "🌌",
   nasa: "🚀",
+  missions: "🛸",
+  exoplanets: "🪐",
   spacex: "⚡",
   uap: "👁",
-  exoplanets: "🪐",
   seti: "📡",
-  missions: "🛸",
   et: "👽",
 };
 
 const FILTER_LABELS: Record<string, string> = {
   all: "All",
   nasa: "NASA",
+  missions: "Missions",
+  exoplanets: "Exoplanets",
   spacex: "SpaceX",
   uap: "UAP",
-  exoplanets: "Exoplanets",
   seti: "SETI",
-  missions: "Missions",
   et: "ET Dossier",
 };
 
