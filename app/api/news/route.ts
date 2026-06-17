@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { fetchSpaceNews } from "@/lib/fetchNews";
 import { translateNewsItems } from "@/lib/translate";
 
-export const revalidate = 21600; // 6 hours
+export const revalidate = 1800; // 30 minutes
 
 export async function GET(req: NextRequest) {
   try {
