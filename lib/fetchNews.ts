@@ -144,13 +144,13 @@ export async function fetchSpaceNews(): Promise<NewsItem[]> {
 
   try {
     const Parser = (await import("rss-parser")).default;
-    const parser = new Parser({ timeout: 6000 });
+    const parser = new Parser({ timeout: 4000 });
 
     await Promise.allSettled(
       RSS_SOURCES.map(async (src) => {
         try {
           const feed = await parser.parseURL(src.url);
-          feed.items.slice(0, 8).forEach((item: any, i: number) => {
+          feed.items.slice(0, 6).forEach((item: any, i: number) => {
             const text = (item.title || "") + " " + (item.contentSnippet || "");
             // Extract image from media:content or enclosure
             const imgUrl =
@@ -177,8 +177,8 @@ export async function fetchSpaceNews(): Promise<NewsItem[]> {
     );
   } catch {}
 
-  // Filter: only articles from the last 30 days
-  const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
+  // Filter: only articles from the current year
+  const cutoff = new Date(`${new Date().getFullYear()}-01-01`).getTime();
   const recent = results.filter((n) => {
     const t = new Date(n.publishedAt).getTime();
     return !isNaN(t) && t >= cutoff;
