@@ -1,4 +1,3 @@
-// MyMemory free translation API — no key needed, ~5000 chars/day
 async function translateText(text: string, to: string): Promise<string> {
   if (!text || to === "en") return text;
   try {
@@ -7,7 +6,10 @@ async function translateText(text: string, to: string): Promise<string> {
       { signal: AbortSignal.timeout(4000) }
     );
     const data = await res.json();
-    return data?.responseData?.translatedText || text;
+    const translated: string = data?.responseData?.translatedText || "";
+    // MyMemory returns ALL CAPS warning when quota is exceeded — fall back to original
+    if (!translated || translated === translated.toUpperCase()) return text;
+    return translated;
   } catch {
     return text;
   }
@@ -19,17 +21,21 @@ export async function translateNewsItems(
 ): Promise<{ title: string; description: string }[]> {
   if (lang === "en") return items;
 
-  // Translate in parallel batches of 5 to avoid rate limits
+  // Only translate first 20 items to stay within free quota (5000 chars/day)
   const results: { title: string; description: string }[] = [];
   for (let i = 0; i < items.length; i += 5) {
     const batch = items.slice(i, i + 5);
-    const translated = await Promise.all(
-      batch.map(async (item) => ({
-        title: await translateText(item.title, lang),
-        description: await translateText(item.description, lang),
-      }))
-    );
-    results.push(...translated);
+    if (i < 20) {
+      const translated = await Promise.all(
+        batch.map(async (item) => ({
+          title: await translateText(item.title, lang),
+          description: await translateText(item.description, lang),
+        }))
+      );
+      results.push(...translated);
+    } else {
+      results.push(...batch);
+    }
   }
   return results;
 }
