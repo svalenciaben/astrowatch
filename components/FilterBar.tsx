@@ -1,7 +1,7 @@
 "use client";
 import { useTranslation } from "react-i18next";
 
-const FILTERS = ["all", "nasa", "spacex", "uap", "exoplanets", "seti", "missions"] as const;
+const FILTERS = ["all", "nasa", "spacex", "uap", "exoplanets", "seti", "missions", "et"] as const;
 export type Filter = typeof FILTERS[number];
 
 const FILTER_ICONS: Record<string, string> = {
@@ -12,6 +12,7 @@ const FILTER_ICONS: Record<string, string> = {
   exoplanets: "🪐",
   seti: "📡",
   missions: "🛸",
+  et: "👽",
 };
 
 const FILTER_LABELS: Record<string, string> = {
@@ -22,6 +23,7 @@ const FILTER_LABELS: Record<string, string> = {
   exoplanets: "Exoplanets",
   seti: "SETI",
   missions: "Missions",
+  et: "ET Dossier",
 };
 
 export default function FilterBar({

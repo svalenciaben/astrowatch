@@ -8,6 +8,7 @@ import FilterBar, { Filter } from "@/components/FilterBar";
 import LaunchCountdown from "@/components/LaunchCountdown";
 import TrendingChart from "@/components/TrendingChart";
 import FunFact from "@/components/FunFact";
+import ETDossier from "@/components/ETDossier";
 import type { NewsItem } from "@/lib/fetchNews";
 
 function getTodayKey() {
@@ -194,6 +195,7 @@ export default function Home() {
 
   const filtered = useMemo(() => {
     let items = sourceNews;
+    if (filter === "et") return items.filter((n) => n.isExtraterrestrial);
     if (filter !== "all") items = items.filter((n) => n.category === filter);
     if (search.trim()) {
       const q = search.toLowerCase();
@@ -294,8 +296,11 @@ export default function Home() {
           <div className="text-center py-24 text-space-warm text-sm font-inter">{t("news.noResults")}</div>
         )}
 
+        {/* ET Dossier — shown when ET filter is active */}
+        {filter === "et" && <ETDossier />}
+
         {/* Alert section */}
-        {alerts.length > 0 && (
+        {filter !== "et" && alerts.length > 0 && (
           <section className="mb-12">
             <div className="flex items-center gap-3 mb-5">
               <span className="alert-badge w-1.5 h-1.5 rounded-full bg-space-alert inline-block"></span>
@@ -310,7 +315,7 @@ export default function Home() {
           </section>
         )}
 
-        {!loading && regular.length > 0 && (
+        {!loading && filter !== "et" && regular.length > 0 && (
           <>
             {/* Featured row: 3 columns */}
             {featuredItems.length > 0 && (
