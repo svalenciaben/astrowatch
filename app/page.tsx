@@ -228,18 +228,26 @@ export default function Home() {
   return (
     <div className="content min-h-screen page-enter">
       <Navbar onSearch={setSearch} />
-      <main className="max-w-7xl mx-auto px-6 py-10">
+      <main className="max-w-7xl mx-auto px-6 py-6">
 
-        {/* Elegant date header + ticker */}
-        <div className="mb-8">
-          <div className="flex items-baseline gap-3 mb-4">
-            <span className="font-playfair text-4xl font-semibold text-space-deep">{dayName}</span>
-            <span className="text-space-muted text-sm font-inter font-light">{monthYear}</span>
+        {/* HERO — first thing visible */}
+        {loading && (
+          <div className="h-96 rounded-2xl bg-gradient-to-br from-space-navy to-space-deep flex items-center justify-center mb-8 animate-pulse">
+            <p className="text-white/40 text-sm font-inter italic">Loading today's top story...</p>
           </div>
+        )}
+        {!loading && heroItem && <HeroCard item={heroItem} />}
 
-          {/* Marquee ticker */}
+        {/* Ticker + date row */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-baseline gap-3">
+              <span className="font-playfair text-2xl font-semibold text-space-deep">{dayName}</span>
+              <span className="text-space-muted text-sm font-inter font-light">{monthYear}</span>
+            </div>
+          </div>
           {tickerHeadlines.length > 0 && (
-            <div className="overflow-hidden border border-space-sand/50 rounded-lg bg-white/60 py-2 px-3 mb-4">
+            <div className="overflow-hidden border border-space-sand/50 rounded-lg bg-white/60 py-2 px-3 mb-3">
               <div className="flex gap-0 whitespace-nowrap">
                 <div className="marquee-track flex gap-8 shrink-0">
                   {[...tickerHeadlines, ...tickerHeadlines].map((h, i) => (
@@ -252,12 +260,8 @@ export default function Home() {
               </div>
             </div>
           )}
-
           <div className="divider" />
         </div>
-
-        {/* Fun Fact */}
-        <FunFact />
 
         <FilterBar active={filter} onChange={setFilter} search={search} onSearch={setSearch} />
 
@@ -308,9 +312,6 @@ export default function Home() {
 
         {!loading && regular.length > 0 && (
           <>
-            {/* Hero card */}
-            {heroItem && <HeroCard item={heroItem} />}
-
             {/* Featured row: 3 columns */}
             {featuredItems.length > 0 && (
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-10">
