@@ -4,6 +4,26 @@ import { useTranslation } from "react-i18next";
 const FILTERS = ["all", "nasa", "spacex", "uap", "exoplanets", "seti", "missions"] as const;
 export type Filter = typeof FILTERS[number];
 
+const FILTER_ICONS: Record<string, string> = {
+  all: "🌌",
+  nasa: "🚀",
+  spacex: "⚡",
+  uap: "👁",
+  exoplanets: "🪐",
+  seti: "📡",
+  missions: "🛸",
+};
+
+const FILTER_LABELS: Record<string, string> = {
+  all: "All",
+  nasa: "NASA",
+  spacex: "SpaceX",
+  uap: "UAP",
+  exoplanets: "Exoplanets",
+  seti: "SETI",
+  missions: "Missions",
+};
+
 export default function FilterBar({
   active,
   onChange,
@@ -19,55 +39,49 @@ export default function FilterBar({
 
   return (
     <div className="flex flex-col gap-3 mb-8">
-      {/* Top row: search + language */}
-      <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => onSearch(e.target.value)}
-          placeholder="Search..."
-          className="bg-white border border-space-sand rounded px-4 py-2 text-sm text-space-deep placeholder-space-warm focus:outline-none focus:border-space-warm w-full sm:w-56 font-inter"
-        />
-        {/* Language selector */}
-        <div className="flex items-center gap-1 bg-white border border-space-sand rounded p-1">
+      {/* Top row: language switcher */}
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        {/* Category pill filters */}
+        <div className="flex gap-2 flex-wrap">
+          {FILTERS.map((f) => (
+            <button
+              key={f}
+              onClick={() => onChange(f)}
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all font-inter border ${
+                active === f
+                  ? "bg-space-blue/10 text-space-blue border-space-blue/30"
+                  : "text-space-muted hover:text-space-ink bg-white border-space-sand hover:border-space-warm"
+              }`}
+            >
+              <span>{FILTER_ICONS[f]}</span>
+              <span>{FILTER_LABELS[f]}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Language toggle */}
+        <div className="flex items-center gap-1 bg-white border border-space-sand rounded-full p-1 shrink-0">
           <button
             onClick={() => i18n.changeLanguage("en")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium transition-all font-inter ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all font-inter ${
               i18n.language === "en"
                 ? "bg-space-deep text-white"
                 : "text-space-muted hover:text-space-ink"
             }`}
           >
-            🇺🇸 English
+            🇺🇸 EN
           </button>
           <button
             onClick={() => i18n.changeLanguage("fr")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium transition-all font-inter ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all font-inter ${
               i18n.language === "fr"
                 ? "bg-space-deep text-white"
                 : "text-space-muted hover:text-space-ink"
             }`}
           >
-            🇫🇷 Français
+            🇫🇷 FR
           </button>
         </div>
-      </div>
-
-      {/* Category filters */}
-      <div className="flex gap-1 flex-wrap">
-        {FILTERS.map((f) => (
-          <button
-            key={f}
-            onClick={() => onChange(f)}
-            className={`px-3 py-1.5 rounded text-xs font-medium transition-all font-inter ${
-              active === f
-                ? "bg-space-deep text-white"
-                : "text-space-muted hover:text-space-ink bg-white border border-space-sand"
-            }`}
-          >
-            {t(`filters.${f}`)}
-          </button>
-        ))}
       </div>
     </div>
   );

@@ -4,6 +4,17 @@ import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import type { NewsItem } from "@/lib/fetchNews";
 
+function timeAgo(dateStr: string): string {
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  const days = Math.floor(hrs / 24);
+  if (days < 7) return `${days}d ago`;
+  return new Date(dateStr).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
 export default function NewsCard({ item }: { item: NewsItem }) {
   const { t } = useTranslation();
   const [saved, setSaved] = useState(() => {
@@ -27,9 +38,9 @@ export default function NewsCard({ item }: { item: NewsItem }) {
 
   return (
     <>
-      <article className="news-card bg-white border border-space-sand/60 rounded-lg overflow-hidden flex flex-col group">
+      <article className="news-card bg-white border border-space-sand/60 rounded-lg overflow-hidden flex flex-col group hover:border-l-2 hover:border-l-space-blue transition-all">
         {/* Image */}
-        <div className="relative h-44 bg-space-parchment overflow-hidden">
+        <div className="relative h-48 bg-space-parchment overflow-hidden">
           {item.imageUrl && item.imageUrl !== "/placeholder.jpg" ? (
             <img
               src={item.imageUrl}
@@ -53,14 +64,9 @@ export default function NewsCard({ item }: { item: NewsItem }) {
                 Breaking
               </span>
             )}
-            {item.isExtraterrestrial && (
-              <span className="bg-space-et/10 border border-space-et/40 text-space-et text-[10px] px-2 py-0.5 rounded font-medium uppercase tracking-wide">
-                ET
-              </span>
-            )}
             {etScore >= 3 && (
               <span className="bg-space-et/10 border border-space-et/30 text-space-et text-[10px] px-2 py-0.5 rounded font-medium">
-                ET: {etScore}/10
+                ET {etScore}/10
               </span>
             )}
           </div>
@@ -74,15 +80,15 @@ export default function NewsCard({ item }: { item: NewsItem }) {
             </span>
             <span className="text-space-sand text-[10px]">·</span>
             <span className="text-[10px] text-space-muted font-inter">
-              {new Date(item.publishedAt).toLocaleDateString()}
+              {timeAgo(item.publishedAt)}
             </span>
           </div>
 
-          <h3 className="font-playfair font-semibold text-space-deep text-sm leading-snug mb-2 line-clamp-2">
+          <h3 className="font-playfair font-semibold text-space-deep text-base leading-snug mb-2 line-clamp-2">
             {item.title}
           </h3>
 
-          <p className="text-space-dim text-xs leading-relaxed mb-4 line-clamp-2 flex-1 font-inter font-light">
+          <p className="text-space-dim text-xs leading-relaxed mb-4 line-clamp-3 flex-1 font-inter font-light">
             {item.description}
           </p>
 
@@ -93,6 +99,9 @@ export default function NewsCard({ item }: { item: NewsItem }) {
             >
               {item.source}
             </Link>
+            <span className="text-[10px] text-space-warm font-inter hidden sm:inline">
+              {timeAgo(item.publishedAt)}
+            </span>
             <div className="flex gap-2">
               <button
                 onClick={toggleSave}
@@ -104,12 +113,14 @@ export default function NewsCard({ item }: { item: NewsItem }) {
               >
                 {saved ? "Saved" : "Save"}
               </button>
-              <button
-                onClick={() => setModalOpen(true)}
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[10px] px-3 py-1 rounded border border-space-sand text-space-dim hover:border-space-warm hover:text-space-ink transition-colors font-inter"
               >
                 Read →
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -152,15 +163,19 @@ export default function NewsCard({ item }: { item: NewsItem }) {
               {item.description}
             </p>
 
-            <div className="flex items-center justify-between pt-4 border-t border-space-sand">
-              <span className="text-[10px] text-space-muted font-inter">{item.source}</span>
+            <div className="flex flex-col gap-3 pt-4 border-t border-space-sand">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] text-space-muted font-inter font-medium">{item.source}</span>
+                <span className="text-space-sand text-[10px]">·</span>
+                <span className="text-[10px] text-space-muted font-inter">{timeAgo(item.publishedAt)}</span>
+              </div>
               <a
                 href={item.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-5 py-2 rounded bg-space-deep text-white text-xs font-inter hover:bg-space-ink transition-colors"
+                className="w-full text-center px-5 py-2.5 rounded bg-space-deep text-white text-xs font-inter hover:bg-space-ink transition-colors"
               >
-                Open full article →
+                Read full article →
               </a>
             </div>
           </div>

@@ -40,7 +40,7 @@ export default function LaunchCountdown() {
 
   if (loading) {
     return (
-      <div className="mb-10">
+      <div className="mb-4">
         <p className="text-space-muted text-xs uppercase tracking-widest font-inter mb-4">Next launches</p>
         <p className="text-space-warm text-sm font-inter font-light italic">Scanning launch manifest...</p>
       </div>
@@ -50,15 +50,15 @@ export default function LaunchCountdown() {
   if (launches.length === 0) return null;
 
   return (
-    <div className="mb-10">
+    <div className="mb-4">
       <p className="text-space-muted text-xs font-inter uppercase tracking-widest mb-4">Next launches</p>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-3">
         {launches.map((launch) => {
           const cd = getCountdown(launch.net);
           return (
             <div
               key={launch.id}
-              className="bg-white border border-space-sand/60 rounded-lg p-5"
+              className="bg-white border border-space-sand/60 rounded-lg p-4"
             >
               <p className="text-[10px] text-space-blue uppercase tracking-widest font-semibold font-inter mb-1">
                 {launch.launch_service_provider?.name || "Unknown"}
@@ -93,7 +93,6 @@ export default function LaunchCountdown() {
           );
         })}
       </div>
-      <div className="divider mt-8"></div>
     </div>
   );
 }
