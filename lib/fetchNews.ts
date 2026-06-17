@@ -177,8 +177,9 @@ export async function fetchSpaceNews(): Promise<NewsItem[]> {
     );
   } catch {}
 
-  // Filter: only articles from the current year
-  const cutoff = new Date(`${new Date().getFullYear()}-01-01`).getTime();
+  // Filter: current year, with a hard floor of 2024 in case of bad feed dates
+  const currentYear = new Date().getFullYear();
+  const cutoff = new Date(`${Math.max(currentYear, 2024)}-01-01`).getTime();
   const recent = results.filter((n) => {
     const t = new Date(n.publishedAt).getTime();
     return !isNaN(t) && t >= cutoff;
