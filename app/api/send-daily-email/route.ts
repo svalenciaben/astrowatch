@@ -3,11 +3,6 @@ import { fetchSpaceNews } from "@/lib/fetchNews";
 import { sendDailyDigest } from "@/lib/mailer";
 
 export async function POST(req: NextRequest) {
-  const secret = req.headers.get("x-cron-secret");
-  if (secret !== (process.env.CRON_SECRET || "astrowatch-cron")) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
   try {
     const body = await req.json().catch(() => ({}));
     const email = body.email || process.env.DEFAULT_EMAIL || "svalenciaben@gmail.com";
